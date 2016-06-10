@@ -1,0 +1,22 @@
+<html>
+{% load LCDtags %}
+<body>
+
+<h4>LCD12864索引</h4>
+<table>
+
+<tr>
+<td>索引&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>...0</td><td>...1</td><td>...2</td><td>...3</td>
+<td>...4</td><td>...5</td><td>...6</td><td>...7</td>
+<td>...8</td><td>...9</td><td>...A</td><td>...B</td>
+<td>...C</td><td>...D</td><td>...E</td><td>...F</td>
+</tr>
+
+{% for word in Words %}
+<tr>
+  <td>{{word.index}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  {{word.content|generate_rows|safe}}
+</tr>
+{% endfor %}
+</table>
