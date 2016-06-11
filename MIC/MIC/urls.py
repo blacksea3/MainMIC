@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include('LCD12864.urls')),
+    #url(r'^', include('LCD12864.urls')),
+    url(r'^LCD/', include('LCD12864.urls')),
     #url(r'^$', auto_response),
 )
