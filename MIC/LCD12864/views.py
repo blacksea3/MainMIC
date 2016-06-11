@@ -60,18 +60,19 @@ def update_database(request):
     #        index=temp1[:5],title="",ttype=0).save()
     #f1.close()
 
-    AllLines = LineWord.objects.all()
+    #AllLines = LineWord.objects.all()
+#
+    #LocTable = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
+#
+    #for Line in AllLines:
+    #    TempLine = Line.content.split(' ')[1:-1]
+    #    PreIndex = Line.index[:-2]
+    #    Loc = 0
+    #    #raise Exception(PreIndex + LocTable[Loc])
+    #    for TempWord in TempLine:
+    #        DetailWord(edittime = datetime.datetime.now(),state=1,content=TempWord,
+    #            index=PreIndex + LocTable[Loc],keyword='',ttype=0).save()
+    #        Loc = Loc + 1
 
-    LocTable = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F']
-
-    for Line in AllLines:
-        TempLine = Line.content.split(' ')[1:-1]
-        PreIndex = Line.index[:-2]
-        Loc = 0
-        #raise Exception(PreIndex + LocTable[Loc])
-        for TempWord in TempLine:
-            DetailWord(edittime = datetime.datetime.now(),state=1,content=TempWord,
-                index=PreIndex + LocTable[Loc],keyword='',ttype=0).save()
-            Loc = Loc + 1
-
-    return HttpResponse('OK')
+    #return HttpResponse('OK')
+    return HttpResponse('NO change')

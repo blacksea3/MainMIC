@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from LCD12864.views import *
 
 def auto_redirect(request):
-    return HttpResponseRedirect('/LCD/index/')
+    return HttpResponseRedirect('/MIC/index/')
 
 urlpatterns = patterns('',
     
