@@ -20,6 +20,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^', include('LCD12864.urls')),
-    url(r'^LCD/', include('LCD12864.urls')),
+    url(r'^MIC/', include('LCD12864.urls')),
     #url(r'^$', auto_response),
 )
+
