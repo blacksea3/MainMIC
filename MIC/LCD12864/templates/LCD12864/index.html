@@ -1,8 +1,32 @@
 <html>
 {% load LCDtags %}
 <body>
-
-<h4>LCD12864索引</h4>
+<div id="wrap" style="position:fixed;top:0;text-align:center;padding:5px 0;width:100%;background:#fff;">
+	行：<input type="text" id="row">
+	列：<input type="text" id="col">
+	字符串：<input type="text" id="string">
+	<div>如果字符串有值，按字符串查找，否则按行查找，列目前失效</div>
+	<input type="button" id="submit" value="确认">
+	<div id="result" style="height:40px;"></div>
+</div>
+<script type="text/javascript">
+	document.getElementById('submit').onclick = function () {
+		if(window.ajax) {
+			ajax({
+				url: '../search/',
+				data: {
+					row: document.getElementById('row').value,
+					col: document.getElementById('col').value,
+					string: document.getElementById('string').value
+				},
+				success: function(data) {
+					document.getElementById('result').innerHTML = data;
+				}
+			})
+		}
+	}
+</script>
+<h4 style="margin-top:80px;">LCD12864索引</h4>
 <table>
 
 <tr>
@@ -20,3 +44,82 @@
 </tr>
 {% endfor %}
 </table>
+<script type="text/javascript">
+function ajax(obj){
+    
+    //必须传入对象参数
+    if(typeof obj !== 'object'){
+        console.log('argument is invalid');
+        return;
+    };
+    
+    //默认参数
+    var defaults = {
+        "data": {},
+        "async": true,
+        "url": location.href.split('?')[0],
+        "type": "GET",
+        "beforeSend": function(){},
+        "complete": function(){console.log('complete')},
+        "success": function(){console.log('success')},
+        "error": function(){console.log('error')}
+    };
+    //默认参数与传入参数合并
+    for(var i in obj) {
+        defaults[i]=obj[i];
+    }
+    
+    //创建XMLHttpRequest对象
+    var xmlhttp;
+    if (window.XMLHttpRequest)
+    {
+        xmlhttp=new XMLHttpRequest();
+    } else {
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    //将传输的数据拼成 'a=1&b=2' 的样子
+    var searchStr="",postSend=null;
+    if(typeof defaults.data == 'object') {
+        for(var i in defaults.data){
+            searchStr=searchStr+i+"="+defaults.data[i]+"&";
+        }
+        if(searchStr[searchStr.length] == "&") searchStr.pop();
+    } else if( typeof defaults.data == "string") {
+        searchStr += defaults.data;
+    }
+    
+    //GET将整理好的数据放到地址后面，POST则让整理好的数据成为send()的参数
+    if(defaults.type=='GET') {
+        if(searchStr) defaults.url +="?"+searchStr;
+    } else if(defaults.type=='POST') {
+        if(searchStr) postSend=searchStr;
+    }
+    
+    //open()规定请求类型、url、是否异步
+    xmlhttp.open(defaults.type, defaults.url, defaults.async);
+    //POST时设定请求头
+    if(defaults.type=='POST') xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    //发送前的回调函数
+    defaults.beforeSend();
+    
+    //异步时设定回调函数
+    if(defaults.async) {
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4) {
+                defaults.complete();        //完成请求的回调函数
+                if(xmlhttp.status==200)
+                    defaults.success(xmlhttp.responseText);     //请求成功的回调函数
+                else defaults.error();      ////请求失败的回调函数
+            }
+        }
+    }
+    
+    //同步时回调函数，同步时只有完成ajax后才会继续运行js
+    xmlhttp.send(postSend);
+    if(!defaults.async){
+        defaults.complete();
+        defaults.success(xmlhttp.responseText);
+    }
+}
+</script>
